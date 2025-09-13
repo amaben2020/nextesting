@@ -1,6 +1,11 @@
 import LoginForm from '@/components/LoginForm';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
+import * as greetModule from '../../utils/greet';
+
+jest.mock('../../utils/greet', () => ({
+  greet: jest.fn(),
+}));
 
 describe('test login form', () => {
   //Arrange
@@ -66,5 +71,11 @@ describe('test login form', () => {
 
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
     expect(emailValueDisplay).toHaveTextContent('test@example.com');
+  });
+
+  test('renders a greeting message', () => {
+    greetModule.greet('Hello, Mock!');
+    // render(<Hello name="World" />);
+    // expect(screen.getByText('Hello, Mock!')).toBeInTheDocument();
   });
 });
